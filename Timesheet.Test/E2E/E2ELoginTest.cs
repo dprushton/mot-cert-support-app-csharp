@@ -13,8 +13,8 @@ public class E2ELoginTest
     public void TestLoginReturnsCorrectPage()
     {
         new DriverManager().SetUpDriver(new ChromeConfig());
-        //ChromeOptions options = new ChromeOptions();
-        //options.AddArguments("--headless");
+        ChromeOptions options = new ChromeOptions();
+        options.AddArguments("--headless");
 
         IWebDriver _webDriver = new ChromeDriver();
 
