@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -15,7 +15,7 @@ jobs:
         run: dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.Unit
       - name: Run integration and E2E checks
         run: |
-          Start-Process -NoNewWindow -FilePath "dotnet" -ArgumentList "run --project Timesheet"
-          Start-Sleep -Seconds 10
+          dotnet run --project Timesheet &
+          sleep 10 &&
           dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.Api
           dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.E2E
