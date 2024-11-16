@@ -31,7 +31,7 @@ public class E2ELoginTest
 
         Assert.That(title, Is.EqualTo("Projects"));
 
-        _webDriver.Close();
+        _webDriver.Close(); 
         _webDriver.Quit();
     }
 
