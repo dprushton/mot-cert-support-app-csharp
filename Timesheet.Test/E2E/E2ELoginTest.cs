@@ -5,6 +5,7 @@ using WebDriverManager.DriverConfigs.Impl;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using NUnit.Framework;
 
 public class E2ELoginTest
 {
@@ -16,7 +17,7 @@ public class E2ELoginTest
         ChromeOptions options = new ChromeOptions();
         options.AddArguments("--headless");
 
-        IWebDriver _webDriver = new ChromeDriver();
+        IWebDriver _webDriver = new ChromeDriver(options);
 
         _webDriver.Navigate().GoToUrl("http://localhost:8080");
 
