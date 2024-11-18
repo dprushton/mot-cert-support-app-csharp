@@ -15,16 +15,12 @@ jobs:
         run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       - name: Install Google Chrome
         run: brew install --cask google-chrome
-      - name: Add Google Chrome to PATH
-        run: echo "/Applications/Google Chrome.app/Contents/MacOS" >> $GITHUB_PATH
+      - name: Install ChromeDriver
+        run: brew install --cask chromedriver
       - name: Verify Google Chrome Installation
         run: /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version
-      - name: Install ChromeDriver
-        run: |
-          CHROME_VERSION=$(/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version | grep -oE '[0-9.]+')
-          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-          curl -sS -o /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_mac64.zip
-          unzip /tmp/chromedriver.zip -d /usr/local/bin/
+      - name: Verify ChromeDriver Installation
+        run: chromedriver --version
       - name: Run unit checks
         run: dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.Unit
       - name: Run integration and E2E checks
