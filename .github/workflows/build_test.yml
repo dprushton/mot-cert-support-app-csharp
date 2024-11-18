@@ -11,6 +11,14 @@ jobs:
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
+      - name: Install Google Chrome
+        run: brew install --cask google-chrome
+      - name: Install ChromeDriver
+        run: |
+          CHROME_VERSION=$(google-chrome --version | grep -oE '[0-9.]+')
+          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+          curl -sS -o /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_mac64.zip
+          unzip /tmp/chromedriver.zip -d /usr/local/bin/
       - name: Run unit checks
         run: dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.Unit
       - name: Run integration and E2E checks
@@ -19,3 +27,6 @@ jobs:
           sleep 10 &&
           dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.Api
           dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.E2E
+```
+
+If you have any more questions or need further assistance, feel free to ask! I'm here to help you through this learning process.
