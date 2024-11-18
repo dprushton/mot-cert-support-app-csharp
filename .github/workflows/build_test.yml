@@ -27,6 +27,3 @@ jobs:
           sleep 10 &&
           dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.Api
           dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.E2E
-```
-
-If you have any more questions or need further assistance, feel free to ask! I'm here to help you through this learning process.
