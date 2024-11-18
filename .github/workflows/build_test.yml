@@ -11,21 +11,35 @@ jobs:
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
+
       - name: Install Homebrew
         run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
       - name: Install Google Chrome
         run: brew install --cask google-chrome
+
       - name: Install ChromeDriver
         run: brew install --cask chromedriver
+
       - name: Verify Google Chrome Installation
         run: /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version
+
       - name: Verify ChromeDriver Installation
         run: chromedriver --version
+
       - name: Run unit checks
         run: dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.Unit
+
       - name: Run integration and E2E checks
         run: |
           dotnet run --project Timesheet &
           sleep 10 &&
-          dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.Api
-          dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.E2E
+          dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.Api --logger trx --results-directory ./test-results
+          dotnet test Timesheet.Test --filter FullyQualifiedName~Timesheet.Test.E2E --logger trx --results-directory ./test-results
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2
+        if: always()
+        with:
+          files: |
+             test-results/*.trx
