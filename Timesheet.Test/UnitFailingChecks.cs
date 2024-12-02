@@ -23,7 +23,7 @@ public class UnitFailingChecks
 
         // Calls the login method of authService with fake credentials.
         _authService = new AuthService(_authDBMock.Object);
-        (int code, Credentials credentials) = _authService.Login("admin@test.com", "password123");
+        (int code, Credentials credentials) = _authService.Login("fake@test.com", "password");
 
         // Verifies that the authDB.checkLogin() method is called exactly once with specified arguments.
         _authDBMock.Verify(_authDBMock => _authDBMock.CheckLogin("fake@test.com", "password"), Times.Once);
@@ -38,7 +38,7 @@ public class UnitFailingChecks
 
         // Calls the validate method of authService with a token and date.
         _authService = new AuthService(_authDBMock.Object);
-        bool response = _authService.CheckSession("abc", DateTime.Parse("3001-01-01"));
+        bool response = _authService.CheckSession("abc123", DateTime.Parse("3001-01-01"));
 
         // Asserts that the response from authService.validate() is true.
         Assert.That(response, Is.True);

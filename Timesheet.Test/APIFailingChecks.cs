@@ -8,7 +8,7 @@ using static RestAssured.Dsl;
 
 public class APIFailingChecks {
 
-    private string token; // Private variable to store authentication token.
+    private string? token; // Private variable to store authentication token.
 
     [SetUp] // Annotation indicating that this method runs before each test.
     public void getToken() {
